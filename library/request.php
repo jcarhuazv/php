@@ -21,8 +21,8 @@ class Request {
 		$segments = explode('/', $this->getUrl());
 		
 		$this->resolveController($segments);
-		$this->resolveParams($segments);
 		$this->resolveAction($segments);
+		$this->resolveParams($segments);
 	}
 
 	public function resolveController(&$segments)
@@ -100,8 +100,31 @@ class Request {
 
 		$controller = new $controllerClassName();
 
-		call_user_func_array([$controller, $actionMethodName], $params);
+		$response = call_user_func_array([$controller, $actionMethodName], $params);
 		
-		// $controller->$actionMethodName();
+		$this->executeResponse($response);
+	}
+
+	public function executeResponse($response)
+	{
+		if ($response instanceof Response)
+		{
+			$response->execute();
+		}
+		elseif (is_string($response))
+		{
+			echo $response;
+			// puede ser un objecto tipo responseString
+		}
+		elseif (is_array($response))
+		{
+			echo json_encode($response);
+			// puede ser un objecto tipo responseJson
+		}
+		else
+		{
+			exit('Invalid response');
+			// puede ser un objecto tipo error 404
+		}
 	}
 }

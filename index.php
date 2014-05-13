@@ -10,6 +10,8 @@ require 'helpers.php';
 // Library
 require 'library/request.php';
 require 'library/Inflector.php';
+require 'library/Response.php';
+require 'library/View.php';
 
 // Llamar a al controlador indicado
 
