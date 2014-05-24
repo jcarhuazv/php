@@ -106,8 +106,7 @@ class Request {
 	}
 
 	public function executeResponse($response)
-	{
-		if ($response instanceof Response)
+	{if ($response instanceof Response)
 		{
 			$response->execute();
 		}
@@ -126,5 +125,6 @@ class Request {
 			exit('Invalid response');
 			// puede ser un objecto tipo error 404
 		}
+		
 	}
 }
